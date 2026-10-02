@@ -1,30 +1,20 @@
 # disks-rs 💽
 
-This project began life in the [blsforme](https://github.com/aerynos/blsforme) project for AerynOS.
-However as time went on it became clear we needed to extend the capabilities beyond simple topology scanning
-and superblocks to support the installer and other use cases.
+This project began life in the [blsforme](https://github.com/aerynos/blsforme) project for aerynOS. However as time went on it became clear we needed to extend the capabilities beyond simple topology scanning and superblocks to support the installer and other use cases.
 
-Importantly due to using blsforme in moss, and requiring static linking to avoid soname breakage on updates,
-we were unable to leverage `libblkid` due to licensing incompatibilities.
+Importantly due to using blsforme in moss, and requiring static linking to avoid soname breakage on updates, we were unable to leverage `libblkid` due to licensing incompatibilities.
 
 ## Goals 🎯
 
-Provide safe and sane APIs for dealing with filesystems, block devices and partitioning in Rust. The intent
-is to provide a high level API that can be used to build tools like installers, partitioners, and other disk
-management tools.
+Provide safe and sane APIs for dealing with filesystems, block devices and partitioning in Rust. The intent is to provide a high level API that can be used to build tools like installers, partitioners, and other disk management tools.
 
-With support, we will also provide the foundations for a Rust implementation of `libblkid`, while also providing
-an alternative to `libparted`.
+With support, we will also provide the foundations for a Rust implementation of `libblkid`, while also providing an alternative to `libparted`.
 
-Per [issue 3](https://github.com/aerynos/disks-rs/issues/3) we do eventually plan to extend the superblock support
-to have in-tree capabilities for writing filesystems, but this is a long term goal. TLDR generation of complete filesystem
-images / rootfs without `euid = 0` requirements. If you want to make this happen faster, then read the next section. 😉
+Per [issue 3](https://github.com/aerynos/disks-rs/issues/3) we do eventually plan to extend the superblock support to have in-tree capabilities for writing filesystems, but this is a long term goal. TLDR generation of complete filesystem images / rootfs without `euid = 0` requirements. If you want to make this happen faster, then read the next section. 😉
 
 ## Support Us ❤️
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J511WM9N)
-
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/ikeycode?style=for-the-badge&logo=github&label=Sponsor)](https://github.com/sponsors/ikeycode)
 
 ## Crates 📦
 
