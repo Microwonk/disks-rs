@@ -9,6 +9,7 @@ use crate::{
 };
 use disks::BlockDevice;
 use gpt::{GptConfig, disk::LogicalBlockSize, mbr, partition_types};
+use log::{debug, trace};
 use std::{
     fs,
     io::{self, Seek, Write},
@@ -174,7 +175,7 @@ impl<'a> DiskWriter<'a> {
         let layout = self.planner.current_layout();
         let changes = self.planner.changes();
 
-        eprintln!("Changes: {changes:?}");
+        debug!("Changes: {changes:?}");
 
         for change in changes {
             match change {
@@ -183,7 +184,7 @@ impl<'a> DiskWriter<'a> {
                     original_index,
                 } => {
                     if let Some(id) = gpt_table.remove_partition(*partition_id) {
-                        println!("Deleted partition {partition_id} (index {original_index}): {id:?}");
+                        debug!("Deleted partition {partition_id} (index {original_index}): {id:?}");
                     }
                 }
                 Change::AddPartition {
@@ -203,7 +204,7 @@ impl<'a> DiskWriter<'a> {
                         None => (partition_types::BASIC, "".to_string()),
                     };
 
-                    eprintln!(
+                    trace!(
                         "Converting partition: bytes {}..{} to LBA {}..{}",
                         start,
                         end,
@@ -212,7 +213,7 @@ impl<'a> DiskWriter<'a> {
                     );
                     let id =
                         gpt_table.add_partition_at(&part_name, *partition_id, start_lba, size_lba, part_type, 0)?;
-                    println!("Added partition {partition_id}: {id:?}");
+                    debug!("Added partition {partition_id}: {id:?}");
                     // Store start and size for zeroing
                     if writable {
                         zero_regions.push((*start, *end));
@@ -221,10 +222,10 @@ impl<'a> DiskWriter<'a> {
             }
         }
 
-        eprintln!("### GPT is now: {gpt_table:?}");
+        trace!("GPT is now: {gpt_table:?}");
 
         for region in layout.iter() {
-            eprintln!(
+            trace!(
                 "Region at: {:?}",
                 region.partition_id.map(|i| self.device.partition_path(i as usize))
             );
